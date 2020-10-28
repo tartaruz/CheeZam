@@ -1,8 +1,10 @@
+from sqlalchemy import create_engine
+import pymysql
 import pandas as pd
-from DB import DbConnector as db
 
-DB = db()
+engine = create_engine("mysql+pymysql://" + '90567_schitzam' + ":" + 'PASSWORD' + "@" + 'sql31.mcb.webhuset.no' + "/" + '90567_schitzam')
+conn = engine.connect()
 
-data = pd.read_csv("data/genre_songs.csv",  engine='python', quotechar='"')
+df = pd.read_csv('data/genre_songs.csv', engine='python', quotechar='"')
 
-print(data["track.id"][0])
+df.to_sql('cases', conn, if_exists = 'replace')
