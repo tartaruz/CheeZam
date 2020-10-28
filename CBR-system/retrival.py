@@ -25,13 +25,25 @@ def knn(cases, queryCase, K):
     
     return [cases[index] for index in k_neighbors[:K]]
 
+
+def voteKNN(cases, queryCase, K_votes):
+    casesSimilar = knn(cases, queryCase, K_votes)
+    genres = [case.playlist_genre for case in casesSimilar]
+    sort = [[x,genres.count(x)] for x in set(genres)]
+    sort.sort(key=lambda count: count[1], reverse=True)
+    if sort[0][1]>1:
+        return sort[0][0]
+    else:
+        return None
+
 def retiveCases():
     DB.cursor.execute("SELECT * FROM cases")
     result = DB.cursor.fetchall()
     return [case(data) for data in result]
 
+
 cases = retiveCases()
 data = cases[10]
-NN = knn(cases, data, 4)
-print(data.track_name+" - "+data.playlist_genre)
-print([case.track_name+" - "+case.track_artist+" - "+case.playlist_genre for case in NN])
+
+votes = voteKNN(cases, data, 10)
+print(votes)

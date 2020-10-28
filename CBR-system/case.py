@@ -43,5 +43,8 @@ class case:
                 self.duration_ms]
     
     #TODO toString
-    # def toString(self):
+    def toString(self):
+        genre = "Genre: "+  str(self.playlist_genre).title() +" ( "+ str(self.playlist_subgenre).title()+" ) "
+        length = (50 - len(genre))
+        return (genre + ("-"*length)+"> "+ str(self.track_name)+"\" by "+str(self.track_artist))
 
