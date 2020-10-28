@@ -4,7 +4,7 @@ class DbConnector:
             HOST="sql31.mcb.webhuset.no",
             DATABASE="90567_schitzam",
             USER="90567_schitzam",
-            PASSWORD=""):
+            PASSWORD="PREBOBU53"):
         # Connect to the database
         try:
             self.db_connection = mysql.connect(host=HOST, database=DATABASE, user=USER, password=PASSWORD, port=3306)
