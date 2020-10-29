@@ -3,11 +3,11 @@ import math
 import random
 
 class Retrieval:
-    def __init__(self, DB, queryCase):
+    def __init__(self, DB):
         self.DB = DB
         self.cases = self.retiveCases()
-        self.queryCase = queryCase
-        self.similarCases = self.knn(queryCase)
+        self.queryCase = None
+        self.similarCases = None
 
     def euclidian_distance(self,v1, v2):
         summation =  0
@@ -24,7 +24,7 @@ class Retrieval:
         
         # Selecting the K nearest neighbors
         k_neighbors = k_neighbors = [[key,value] for key, value in sorted(distances.items(), key=lambda case: case[1])][:(K-1)]
-        return [[self.cases[index[0]],index[1]] for index in k_neighbors]
+        self.similarCases = [[index[0],index[1]] for index in k_neighbors]
 
 
     def retiveCases(self):
