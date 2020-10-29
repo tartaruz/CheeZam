@@ -28,7 +28,8 @@ class case:
 
     # Returnerer verdier for sammelingning
     def returnNumericValue(self):
-        return [self.track_popularity, 
+        return [
+                #self.track_popularity, 
                 self.danceability,
                 self.energy,
                 self.key_value,
@@ -41,8 +42,34 @@ class case:
                 self.valence,
                 self.tempo,
                 self.duration_ms]
-    
-    #TODO toString
+
+    def toDict(self):
+        return {
+            'track_id': self.track_id,
+            'track_name': self.track_name,
+            'track_artist': self.track_artist,
+            'track_popularity': self.track_popularity,
+            'track_album_id': self.track_album_id,
+            'track_album_name':self.track_album_name,
+            'track_album_release_date': self.track_album_release_date,
+            'playlist_name': self.playlist_name,
+            'playlist_id': self.playlist_id,
+            'playlist_genre': self.playlist_genre,
+            'playlist_subgenre': self.playlist_subgenre,
+            'danceability': self.danceability,
+            'energy': self.energy,
+            'key': self.key_value,
+            'loudness': self.loudness,
+            'mode': self.mode,
+            'speechiness': self.speechiness,
+            'acousticness': self.acousticness,
+            'instrumentalness': self.instrumentalness,
+            'liveness': self.liveness,
+            'valence': self.valence,
+            'tempo': self.tempo,
+            'duration_ms': self.duration_ms
+            }
+
     def __str__(self):
         genre = "Genre: "+  str(self.playlist_genre).title() +" ( "+ str(self.playlist_subgenre).title()+" ) "
         length = (50 - len(genre))
