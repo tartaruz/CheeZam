@@ -1,5 +1,5 @@
 from server.DB import DbConnector
-from case import case
+from model.case import case
 import math
 import random
 
