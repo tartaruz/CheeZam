@@ -27,7 +27,11 @@ class CBR:
         self.r2.retrieval = self.r1
         self.r2.reuse(similarCases)
 
+    def revision(self):
+        pass
 
+    def retain(self):
+        pass
 
 
 
