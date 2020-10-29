@@ -1,11 +1,12 @@
-from server.DB import DbConnector
+
 from model.case import case
 import math
 import random
 
-DB = DbConnector()
+
 class Retrieval:
-    def __init__(self):
+    def __init__(self, DB):
+        self.DB = DB
         self.cases = self.retiveCases()
 
     def euclidian_distance(self,v1, v2):
@@ -15,11 +16,8 @@ class Retrieval:
         return math.sqrt(summation)
 
     def knn(self, queryCase, K):
-        # Initializing dict of distances and variable with size of training set
         distances = {}
         casesValues = [c.returnNumericValue() for c in self.cases]
-        # Calculating the Euclidean distance between the new
-        # sample and the values of the training sample
         for i in range(len(casesValues)):
             d = self.euclidian_distance(casesValues[i], queryCase.returnNumericValue())
             distances[i] = d
@@ -39,9 +37,9 @@ class Retrieval:
         else:
             return None
 
-    def retiveCases(self,):
-        DB.cursor.execute("SELECT * FROM cases")
-        result = DB.cursor.fetchall()
+    def retiveCases(self):
+        self.DB.cursor.execute("SELECT * FROM cases")
+        result = self.DB.cursor.fetchall()
         return [case(data) for data in result]
 
 
