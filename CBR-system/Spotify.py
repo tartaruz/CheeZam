@@ -1,5 +1,4 @@
 import requests
-# Yjk2MDNlY2EyNzdhNGE1NmIxMDAyYjQ4ODg5YTMzZDc6ZTJhNTEwMGIwYWQ2NGRiODhiOTUyZjFlNWY1MjNlY2Y=
 
 class Spotify:
 
