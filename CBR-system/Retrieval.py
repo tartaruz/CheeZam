@@ -1,8 +1,6 @@
-
 from model.case import case
 import math
 import random
-
 
 class Retrieval:
     def __init__(self, DB):
