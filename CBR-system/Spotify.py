@@ -29,13 +29,14 @@ class Spotify:
 
         return requests.get(url, params=params, headers=headers)
 
-    def getAudioFeatures(self, track_id):
+    def getAudioFeatures(self, searchResponse):
+        track_id = searchResponse.json()['tracks']['items'][0]['id']
         url = 'https://api.spotify.com/v1/audio-features/' + track_id
         headers = {
             'Authorization': f'Bearer {self.access_token}'
         }
 
-        return requests.get(url, headers=headers).json()
+        return requests.get(url, headers=headers)
 
 
 # def main():

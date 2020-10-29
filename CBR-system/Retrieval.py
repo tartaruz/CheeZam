@@ -3,11 +3,11 @@ import math
 import random
 
 class Retrieval:
-    def __init__(self, DB, queryCase):
+    def __init__(self, DB):
         self.DB = DB
         self.cases = self.retiveCases()
-        self.queryCase = queryCase
-        self.similarCases = self.knn(queryCase)
+        self.queryCase = None
+        self.similarCases = None
 
     def euclidian_distance(self,v1, v2):
         summation =  0

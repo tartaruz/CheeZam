@@ -5,7 +5,7 @@ class Reuse:
         self.epsilon = epsilon
     
     def reuse(self):
-
+        pass
     
     def setQueryCase(self, q):
         self.queryCase = q
