@@ -28,9 +28,7 @@ class case:
 
     # Returnerer verdier for sammelingning
     def returnNumericValue(self):
-        return [
-                #self.track_popularity, 
-                self.danceability,
+        return list(map(lambda x: round(x, 4), [self.danceability,
                 self.energy,
                 self.key_value,
                 self.loudness,
@@ -41,7 +39,7 @@ class case:
                 self.liveness,
                 self.valence,
                 self.tempo,
-                self.duration_ms]
+                self.duration_ms]))
 
     def toDict(self):
         return {
