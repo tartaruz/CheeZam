@@ -23,8 +23,8 @@ class Retrieval:
             distances[i] = d
         
         # Selecting the K nearest neighbors
-        k_neighbors = k_neighbors = [[key,value] for key, value in sorted(distances.items(), key=lambda case: case[1])][:(K-1)]
-        self.similarCases = [[index[0],index[1]] for index in k_neighbors]
+        k_neighbors = k_neighbors = [[key, value] for key, value in sorted(distances.items(), key=lambda case: case[1])][:K]
+        self.similarCases = [[self.cases[index[0]].track_id,index[1]] for index in k_neighbors]
 
 
     def retiveCases(self):

@@ -55,10 +55,9 @@ class CBR:
         new_case = list(map(lambda x: x[1], track_features.items()))
         self.case = case(new_case)
 
-    def retive(self, query, k):
+    def retrieve(self, k):
         # [2,3,2,3,2,3,23]
-        queryCase =  case(query)
-        self.r1.queryCase = queryCase
+        self.r1.queryCase = self.case
         self.r1.knn(k)
 
     def reuse(self):
@@ -76,12 +75,16 @@ def main():
     cbr = CBR()
     cbr.setQuery()
     cbr.caseFromQuery()
-    print(cbr.case)
+    print(cbr.case.returnNumericValue())
+    print(list(filter(lambda x: x.track_id == '2XU0oxnq2qxCpomAAuJY8K', cbr.r1.cases))[0].returnNumericValue())
+    cbr.retrieve(10)
+    print(cbr.r1.similarCases)
+    # print(cbr.case)
     
-    CBR = CBR()
-    CBR.retive(query,10)
-    CBR.reuse()
-    print(CBR.r2.predictionCase)
+    # CBR = CBR()
+    # CBR.retive(query,10)
+    # CBR.reuse()
+    # print(CBR.r2.predictionCase)
 
 if __name__ == '__main__':
     main()
