@@ -96,7 +96,7 @@ def main():
     cbr.caseFromQuery()
     cbr.retrieve(10)
     cbr.reuse()
-    print(f'The song\'s predicted genre are "{cbr.r2.predictionGenre}"')
+    print(f'The song\'s predicted genre are "{cbr.r2.predictionGenre}" and predicted sub-genre are "{cbr.r2.predictionCase.playlist_subgenre}"')
     print()
     cbr.revision()
     # print(cbr.case)
