@@ -15,7 +15,7 @@ class Reuse:
             genre = self.voteKNN(self.queryCase, 7)
             self.predictionGenre = genre
         else:
-            self.predictionCase = self.cases[epsilonAcceptedCases[0][0]]
+            self.predictionCase = list(filter(lambda x: x.track_id == epsilonAcceptedCases[0][0], self.cases))[0]
             self.predictionGenre = self.predictionCase.playlist_genre
 
     

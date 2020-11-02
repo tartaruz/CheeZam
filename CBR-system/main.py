@@ -3,6 +3,7 @@ from Retrieval import Retrieval
 from Reuse import Reuse
 from Spotify import Spotify
 from model.case import case
+from Revise import Revise
 
 query = [12029,"7tFiyTwD0nx5a1eklYtX2J","Bohemian Rhapsody - 2011 Mix","Queen",
             75,"6X9k3hSsvQck2OfKYdBbXr","A Night At The Opera (Deluxe Remastered Version)",
@@ -19,10 +20,12 @@ class CBR:
         self.query = None
         self.artist = None
         self.case = None
+        self.r3 = Revise()
 
     def setQuery(self):
         self.query = input('Please input a song title to predict genre: ').lower()
         self.artist = input('Please enter atrist of the song: ').lower()
+        print()
 
     def caseFromQuery(self):
         track_id, track = self.spotify.search(self.query, self.artist, 'track')
@@ -59,7 +62,7 @@ class CBR:
             'tempo': audio_features['tempo'],
             'duration_ms': audio_features['duration_ms']
         }
-        print(track_features["track_id"],track_features["track_name"], " by ", track_features["track_artist"])
+        # print(track_features["track_id"],track_features["track_name"], " by ", track_features["track_artist"])
         new_case = list(map(lambda x: x[1], track_features.items()))
         self.case = case(new_case)
 
@@ -74,7 +77,9 @@ class CBR:
         self.r2.reuse(similarCases)
 
     def revision(self):
-        pass
+        self.case = self.r3.revise(self.r2.predictionCase, self.case)
+        print()
+        print(f'Genre for new song {self.case.playlist_genre}, subgenre for new song: {self.case.playlist_subgenre}')
 
     def retain(self):
         pass
@@ -83,10 +88,11 @@ def main():
     cbr = CBR()
     cbr.setQuery()
     cbr.caseFromQuery()
-    print(cbr.case.returnNumericValue())
-    print(list(filter(lambda x: x.track_id == '2XU0oxnq2qxCpomAAuJY8K', cbr.r1.cases))[0].returnNumericValue())
     cbr.retrieve(10)
-    print(cbr.r1.similarCases)
+    cbr.reuse()
+    print(f'The song\'s predicted genre are "{cbr.r2.predictionGenre}"')
+    print()
+    cbr.revision()
     # print(cbr.case)
     
     # CBR = CBR()

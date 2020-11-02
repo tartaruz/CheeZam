@@ -68,6 +68,11 @@ class case:
             'duration_ms': self.duration_ms
             }
 
+    def setValues(self, genre, subgenre):
+        self.playlist_genre = genre
+        self.playlist_subgenre = subgenre
+
+
     def __str__(self):
         genre = "Genre: "+  str(self.playlist_genre).title() +" ( "+ str(self.playlist_subgenre).title()+" ) "
         length = (50 - len(genre))

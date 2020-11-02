@@ -16,7 +16,6 @@ class Spotify:
         return resp.json()['access_token'], resp.json()['token_type']
 
     def search(self, query, artist, qtype):
-        print(query)
         url = f'https://api.spotify.com/v1/search'
         params = {
             'query': query.replace(' ', '+'),
@@ -31,7 +30,7 @@ class Spotify:
         res = requests.get(url, params=params, headers=headers).json()
 
         if 'tracks' not in res.keys():
-            return False
+            return None, False
         
         tracks = res['tracks']['items']
 
@@ -61,7 +60,7 @@ class Spotify:
                 break
 
         if track_id is None:
-            return False
+            return None, False
         
         return track_id, track
 
