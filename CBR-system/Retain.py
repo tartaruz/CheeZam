@@ -18,6 +18,7 @@ class Retain:
             query = self.sqlQuery()
             self.DB.cursor.execute(query)
             self.DB.db_connection.commit()
+            print("Case inserted to DB")
         else:
             return Exception("No case to retain")
     

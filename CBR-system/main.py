@@ -4,7 +4,7 @@ from Reuse import Reuse
 from Spotify import Spotify
 from model.case import case
 from Revise import Revise
-
+from Retain import Retain
 query = [12029,"7tFiyTwD0nx5a1eklYtX2J","Bohemian Rhapsody - 2011 Mix","Queen",
             75,"6X9k3hSsvQck2OfKYdBbXr","A Night At The Opera (Deluxe Remastered Version)",
             1975-11-21,"Classic Rock Drive","37i9dQZF1DXdOEFt9ZX0dh",
@@ -16,11 +16,12 @@ class CBR:
         self.DB = DbConnector()
         self.r1 = Retrieval(self.DB)
         self.r2 = Reuse(self.r1.cases)
+        self.r3 = Revise(self.DB)
+        self.r4 = Retain(self.DB)
         self.spotify = Spotify()
         self.query = None
         self.artist = None
         self.case = None
-        self.r3 = Revise(self.DB)
         self.artist_genres = []
 
     def setQuery(self):
@@ -88,7 +89,8 @@ class CBR:
         print(f'Genre for new song {self.case.playlist_genre}, subgenre for new song: {self.case.playlist_subgenre}')
 
     def retain(self):
-        pass
+        self.r4.setCase(self.case)
+        self.r4.retain()
 
 def main():
     cbr = CBR()
