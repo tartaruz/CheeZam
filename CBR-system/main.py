@@ -17,15 +17,22 @@ class CBR:
         self.r2 = Reuse(self.r1.cases)
         self.spotify = Spotify()
         self.query = None
+        self.artist = None
         self.case = None
 
     def setQuery(self):
-        self.query = input('Please input a song title and artist (Song title Artist name) to predict genre: ').lower()
+        self.query = input('Please input a song title to predict genre: ').lower()
+        self.artist = input('Please enter atrist of the song: ').lower()
 
     def caseFromQuery(self):
-        track = self.spotify.search(self.query, 'track')
-        audio_features = self.spotify.getAudioFeatures(track).json()
-        track = track.json()['tracks']['items'][0]
+        track_id, track = self.spotify.search(self.query, self.artist, 'track')
+
+        while not track:
+            print(f"Could not find any results for {self.query}. Try again")
+            self.setQuery()
+            track_id, track = self.spotify.search(self.query, self.artist, 'track')
+
+        audio_features = self.spotify.getAudioFeatures(track_id).json()
         track_features = {
             'index': None,
             'track_id': track['id'],
