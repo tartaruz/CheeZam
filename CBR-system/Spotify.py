@@ -73,10 +73,17 @@ class Spotify:
 
         return requests.get(url, headers=headers)
 
+    def getArtistGenres(self, artist_id):
+        url = f'https://api.spotify.com/v1/artists/{artist_id}'
+        headers = {
+            'Authorization': f'Bearer {self.access_token}'
+        }
+
+        return requests.get(url, headers=headers).json()['genres']
 
 # def main():
 #     spotify = Spotify()
-#     print(spotify.getAudioFeatures(spotify.search('Thriller Michael Jackson', 'track').json()['tracks']['items'][0]['id']))
+#     # print(spotify.getAudioFeatures(spotify.search('Thriller Michael Jackson', 'track').json()['tracks']['items'][0]['id']))
 
 # if __name__ == '__main__':
 #     main()

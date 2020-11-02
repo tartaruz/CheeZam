@@ -20,7 +20,8 @@ class CBR:
         self.query = None
         self.artist = None
         self.case = None
-        self.r3 = Revise()
+        self.r3 = Revise(self.DB)
+        self.artist_genres = []
 
     def setQuery(self):
         self.query = input('Please input a song title to predict genre: ').lower()
@@ -34,6 +35,11 @@ class CBR:
             print(f"Could not find any results for {self.query}. Try again")
             self.setQuery()
             track_id, track = self.spotify.search(self.query, self.artist, 'track')
+
+        try:
+            self.artist_genres = self.spotify.getArtistGenres(track['album']['artists'][0]['id'])
+        except:
+            pass
 
         audio_features = self.spotify.getAudioFeatures(track_id).json()
         track_features = {
@@ -77,7 +83,7 @@ class CBR:
         self.r2.reuse(similarCases)
 
     def revision(self):
-        self.case = self.r3.revise(self.r2.predictionCase, self.case)
+        self.case = self.r3.revise(self.r2.predictionCase, self.case, self.artist_genres)
         print()
         print(f'Genre for new song {self.case.playlist_genre}, subgenre for new song: {self.case.playlist_subgenre}')
 
