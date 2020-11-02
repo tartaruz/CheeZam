@@ -19,9 +19,6 @@ class Revise:
 
         if satisfied.lower() == 'y':
             self.genre = solution.playlist_genre
-            self.subgenre = solution.playlist_subgenre
-
-            print('Thank you!')
         else:
             print('Which of the following genres do you think fits the song best?')
             for index, genre in enumerate(self.genres):
@@ -35,24 +32,24 @@ class Revise:
                 self.genre = input('Input genre: ')
             else:
                 self.genre = self.genres[ans - 1]
-            
-            want_sub_genre = input('Do you want to provide a sub-genre aswell (y/n)? ')
 
-            if want_sub_genre.lower() == 'y':
-                print('Which of the following genres do you think fits the song best?')
-                for index, genre in enumerate(self.subgenres):
-                    print(f'{index+1}. {genre.capitalize()}')
-                print(f'{index+2}. Enter myself')
+        satisfied = input(f'Are you satisfied with the song\'s predicted sub-genre "{solution.playlist_subgenre}" (y/n)? ')
 
-                print()
-                ans = int(input(f'1 - {index + 2}: '))
+        if satisfied.lower() == 'y':
+            self.subgenre = solution.playlist_subgenre
+        else:
+            print('Which of the following genres do you think fits the song best?')
+            for index, genre in enumerate(self.subgenres):
+                print(f'{index+1}. {genre.capitalize()}')
+            print(f'{index+2}. Enter myself')
 
-                if ans == index + 2:
-                    self.subgenre = input(f'Enter subgenre: ')
-                else:
-                    self.subgenre = self.subgenres[ans - 1]
+            print()
+            ans = int(input(f'1 - {index + 2}: '))
+
+            if ans == index + 2:
+                self.subgenre = input(f'Enter subgenre: ')
             else:
-                self.subgenre = solution.playlist_subgenre
+                self.subgenre = self.subgenres[ans - 1]
 
         print()
         print('Thank you for your answers!')
