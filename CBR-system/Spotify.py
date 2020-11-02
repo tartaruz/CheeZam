@@ -47,7 +47,6 @@ class Spotify:
         if len(corrected_artist) == 0:
             corrected_artist = artists[0]
         
-        print(corrected_artist)
 
         track_id =  None # list(filter(lambda x: x['atrists']['name'].lower() == atrist and x['name'].lower() == query, tracks))
         selected_track = None
