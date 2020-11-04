@@ -11,7 +11,6 @@ class Retain:
     def check_exist(self, case):
         self.DB.cursor.execute("SELECT `track.id` FROM cases WHERE `track.id` = \""+case.track_id+"\";")
         fetchedCase = self.DB.cursor.fetchone()
-        print(fetchedCase)
         return (fetchedCase is not None)
 
     def retain(self):

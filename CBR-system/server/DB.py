@@ -1,5 +1,7 @@
 import mysql.connector as mysql
+import atexit
 class DbConnector:
+    
     def __init__(self,
             HOST="sql31.mcb.webhuset.no",
             DATABASE="90567_schitzam",
@@ -20,6 +22,8 @@ class DbConnector:
         database_name = self.cursor.fetchone()
         print("You are connected to the database:", database_name)
         print("-----------------------------------------------\n")
+        atexit.register(self.goodbye)
+
 
     def close_connection(self):
         # close the cursor
@@ -41,4 +45,10 @@ class DbConnector:
         self.cursor = self.db_connection.cursor()
         self.cursor.execute("select database();")
         database_name = self.cursor.fetchone()
+
+    def goodbye(self):
+        self.close_connection()
+        print('Goodbye,it was nice to meet you.')
+
+
 

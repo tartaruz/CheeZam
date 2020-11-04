@@ -1,5 +1,5 @@
 class Reuse:
-    def __init__(self, cases,epsilon=10):
+    def __init__(self, cases,epsilon=0):
         self.queryCase = None
         self.retrieval = None
         self.predictionCase = None
@@ -21,6 +21,7 @@ class Reuse:
             self.voteKNN(self.queryCase, 30)
             self.predictionGenre = self.genres[0]
             self.predictionSubGenre = self.subgenres[0]
+            print(self.genres)
 
         else:
             predictionCase = list(filter(lambda x: x.track_id == epsilonAcceptedCases[0][0], self.cases))[0]

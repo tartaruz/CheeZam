@@ -68,9 +68,8 @@ class Revise:
                     print()
                     self.genre = self.genres[idx - 1].lower()
             else:
-                print("MANY")
                 for index, genre in enumerate(self.reuse.genres):
-                    print(f'{index+1}. {genre[0].lower()}')
+                    print(f'{index+1}. {genre[0].title()}')
                 print(f'{index+2}. Enter myself')
                 print()
                 idx = int(input(f'1-{index + 2}: '))

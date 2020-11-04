@@ -33,33 +33,26 @@ class CBR:
         self.r2.setQueryCase(self.case)
         self.r2.retrieval = self.r1
         self.r2.reuse(similarCases)
-        self.DB.close_connection()
         
     def revision(self):
-        self.DB.open_connection()
         self.r3.reuse = self.r2
         self.r3.case = self.case
         self.r3.revise()
-        self.DB.close_connection()
         self.r2.predictionGenre = self.case.playlist_genre
         self.r2.predictionSubGenre =self.case.playlist_subgenre
         print()
 
     def retain(self):
-        print(f'Genre for "{self.case.track_name}" {self.case.playlist_genre}, subgenre for new song: {self.case.playlist_subgenre}')
+        print(f'Info about "{self.case.track_name}\nGenre: {self.case.playlist_genre}\nSubgenre: {self.case.playlist_subgenre} \n')
         self.r4.setCase(self.case)
-        self.DB.open_connection()
         self.r4.retain()
-        self.DB.close_connection()
 
     def setQuery(self):
-        self.DB.close_connection()
         self.query = input('Please input a song title to predict genre: ').lower()
         self.artist = input('Please enter artist of the song: ').lower()
         print()
         self.DB.open_connection()
         self.case = case(caseFromQuery(self))
-        self.DB.close_connection()
 
 
 
