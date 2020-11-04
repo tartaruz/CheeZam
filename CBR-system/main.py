@@ -48,15 +48,18 @@ class CBR:
     def retain(self):
         print(f'Genre for "{self.case.track_name}" {self.case.playlist_genre}, subgenre for new song: {self.case.playlist_subgenre}')
         self.r4.setCase(self.case)
-        self.DB.close_connection()
+        self.DB.open_connection()
         self.r4.retain()
         self.DB.close_connection()
 
     def setQuery(self):
+        self.DB.close_connection()
         self.query = input('Please input a song title to predict genre: ').lower()
         self.artist = input('Please enter artist of the song: ').lower()
         print()
+        self.DB.open_connection()
         self.case = case(caseFromQuery(self))
+        self.DB.close_connection()
 
 
 
