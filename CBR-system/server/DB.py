@@ -26,7 +26,19 @@ class DbConnector:
         self.cursor.close()
         # close the DB connection
         self.db_connection.close()
-        print("\n-----------------------------------------------")
-        print("Connection to %s is closed" % self.db_connection.get_server_info())
 
+
+    def open_connection(self,
+            HOST="sql31.mcb.webhuset.no",
+            DATABASE="90567_schitzam",
+            USER="90567_schitzam",
+            PASSWORD="PREBOBU53"):
+        try:
+            self.db_connection = mysql.connect(host=HOST, database=DATABASE, user=USER, password=PASSWORD, port=3306)
+        except Exception as e:
+            print("ERROR: Failed to connect to db:", e)
+        # Get the db cursor
+        self.cursor = self.db_connection.cursor()
+        self.cursor.execute("select database();")
+        database_name = self.cursor.fetchone()
 

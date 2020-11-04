@@ -30,31 +30,33 @@ class CBR:
     # Reuse 
     def reuse(self):
         similarCases = self.r1.similarCases
-        # for case in similarCases:
-        #     print(case)
         self.r2.setQueryCase(self.case)
         self.r2.retrieval = self.r1
         self.r2.reuse(similarCases)
+        self.DB.close_connection()
         
     def revision(self):
+        self.DB.open_connection()
         self.r3.reuse = self.r2
         self.r3.case = self.case
         self.r3.revise()
+        self.DB.close_connection()
+        self.r2.predictionGenre = self.case.playlist_genre
+        self.r2.predictionSubGenre =self.case.playlist_subgenre
         print()
-        print(f'Genre for new song {self.case.playlist_genre[0].title()}, subgenre for new song: {self.case.playlist_subgenre.title()}')
-        print(self.case)
 
     def retain(self):
+        print(f'Genre for "{self.case.track_name}" {self.case.playlist_genre}, subgenre for new song: {self.case.playlist_subgenre}')
         self.r4.setCase(self.case)
-        print(self.case)
+        self.DB.close_connection()
         self.r4.retain()
+        self.DB.close_connection()
 
     def setQuery(self):
         self.query = input('Please input a song title to predict genre: ').lower()
-        self.artist = input('Please enter atrist of the song: ').lower()
+        self.artist = input('Please enter artist of the song: ').lower()
         print()
         self.case = case(caseFromQuery(self))
-        print(self.case)
 
 
 
@@ -64,11 +66,15 @@ def main():
 
     # kNN with K=1  ----> 1-NN
     cbr.retrieve()
+    
+    # Use the closes neighbor, or have an votation for findng genre data
     cbr.reuse()
-    print(f'The song\'s predicted genre are "{cbr.r2.predictionGenre}" and predicted sub-genre are "{cbr.r2.predictionSubGenre}"')
-    print()
+    
+    #much fun
     cbr.revision()
-    print(cbr.case)
+
+    #saves if dont exist
+    cbr.retain()
 
 
 if __name__ == '__main__':

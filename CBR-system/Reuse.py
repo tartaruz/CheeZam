@@ -1,5 +1,5 @@
 class Reuse:
-    def __init__(self, cases,epsilon=0):
+    def __init__(self, cases,epsilon=10):
         self.queryCase = None
         self.retrieval = None
         self.predictionCase = None
@@ -18,13 +18,11 @@ class Reuse:
         # Pigeonhole principle since we got 6 main genres
         
         if len(epsilonAcceptedCases)<=0:
-            print("Vote KNN")
             self.voteKNN(self.queryCase, 30)
             self.predictionGenre = self.genres[0]
             self.predictionSubGenre = self.subgenres[0]
 
         else:
-            print("epsilin")
             predictionCase = list(filter(lambda x: x.track_id == epsilonAcceptedCases[0][0], self.cases))[0]
             self.predictionGenre = [predictionCase.playlist_genre]
             self.predictionSubGenre = [predictionCase.playlist_subgenre]
@@ -58,4 +56,7 @@ class Reuse:
 
         
 
-    
+    def genreSort(self, genres):
+        genres_sort = [[x,genres.count(x)] for x in set(genres)]
+        genres_sort.sort(key=lambda count: count[1], reverse=True)
+        return genres_sort

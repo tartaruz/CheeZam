@@ -11,6 +11,7 @@ class Retain:
     def check_exist(self, case):
         self.DB.cursor.execute("SELECT `track.id` FROM cases WHERE `track.id` = \""+case.track_id+"\";")
         fetchedCase = self.DB.cursor.fetchone()
+        print(fetchedCase)
         return (fetchedCase is not None)
 
     def retain(self):
@@ -19,8 +20,10 @@ class Retain:
             self.DB.cursor.execute(query)
             self.DB.db_connection.commit()
             print("Case inserted to DB")
+            print(self.case)
         else:
-            return Exception("No case to retain")
+            print("Case NOT inserted to DB")
+            print(self.case)
     
     # LOOK WHAT SANDER MADE ME DOOOO
     def sqlQuery(self):

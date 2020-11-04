@@ -40,4 +40,5 @@ def caseFromQuery(cbr):
     }
     # print(track_features["track_id"],track_features["track_name"], " by ", track_features["track_artist"])
     new_case = list(map(lambda x: x[1], track_features.items()))
+    print("Song found: ", new_case[2],"by",new_case[3])
     return new_case
