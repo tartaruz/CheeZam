@@ -65,7 +65,6 @@ class Spotify:
 
         if track_id is None:
             return None, False
-        
         return track_id, track
 
 

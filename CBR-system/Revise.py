@@ -3,6 +3,8 @@ class Revise:
     def __init__(self, DB):
         # self.genres = ['Pop', 'Rap', 'Rock', 'Latin', 'R&B', 'EDM']
         # self.subgenres = ['dance pop', 'post-teen pop', 'electropop', 'indie poptimism', 'hip hop', 'southern hip hop', 'gangster rap', 'trap', 'album rock', 'classic rock', 'permanent wave', 'hard rock', 'tropical', 'latin pop', 'reggaeton', 'latin hip hop', 'urban contemporary', 'hip pop', 'new jack swing', 'neo soul', 'electro house', 'big room', 'pop edm', 'progressive electro house']
+        self.reuse = None
+        self.case = None
         self.genre = None
         self.subgenre = None
         self.DB = DB
@@ -11,42 +13,25 @@ class Revise:
         self.DB.cursor.execute('SELECT DISTINCT playlist_subgenre FROM cases;')
         self.subgenres = [subgenre[0].capitalize() for subgenre in self.DB.cursor.fetchall()]
 
-    def revise(self, solution, new_case, artist_genres):
-        self.genres += artist_genres
+    def revise(self):
+        # CBR, new_case, artist_genres
         self.genres = list(set([genre.capitalize() for genre in self.genres]))
-        satisfied = input(f'Are you satisfied with the song\'s predicted genre "{solution.playlist_genre}" (y/n)? ')
+        
+        satisfied = self.consol_print("first_predict")
         print()
 
         if satisfied.lower() == 'y':
-            self.genre = solution.playlist_genre
+            self.genre = self.reuse.predictionGenre
         else:
-            print('Which of the following genres do you think fits the song best?')
-            for index, genre in enumerate(self.genres):
-                print(f'{index+1}. {genre}')
-            print(f'{index+2}. Enter myself')
-            
-            print()
-            ans = int(input(f'1-{index + 2}: '))
+            ans = self.consol_print("choose_genre")
 
-            if ans == index+2:
-                self.genre = input('Input genre: ')
-            else:
-                self.genre = self.genres[ans - 1]
-
-        satisfied = input(f'Are you satisfied with the song\'s predicted sub-genre "{solution.playlist_subgenre}" (y/n)? ')
+        satisfied = self.consol_print("predict_subgenre")
 
         if satisfied.lower() == 'y':
-            self.subgenre = solution.playlist_subgenre
+            self.subgenre = self.reuse.predictionSubGenre
         else:
-            print('Which of the following genres do you think fits the song best?')
-            for index, genre in enumerate(self.subgenres):
-                print(f'{index+1}. {genre.capitalize()}')
-            print(f'{index+2}. Enter myself')
-
-            print()
-            ans = int(input(f'1 - {index + 2}: '))
-
-            if ans == index + 2:
+            ans = self.consol_print("choose_subgenre")
+            if ans == len(self.subgenres) + 2:
                 self.subgenre = input(f'Enter subgenre: ')
             else:
                 self.subgenre = self.subgenres[ans - 1]
@@ -54,9 +39,66 @@ class Revise:
         print()
         print('Thank you for your answers!')
 
-        new_case.setValues(self.genre.lower(), self.subgenre)
-        return new_case
+
+        #Update the case to predicitons or decitions
+        self.case.playlist_genre= self.genre.lower()
+        self.case.playlist_subgenre = self.subgenre
 
 
+
+
+    def consol_print(self, chatCase):
+        if chatCase =="first_predict":
+            return input(f'Are you satisfied with the song\'s predicted genre "{self.reuse.predictionGenre[0]}" (y/n)? ')
+        
+        elif chatCase =="choose_genre":
+            print('Which of the following genres do you think fits the song best?')
+            if len(self.reuse.genres)==1:
+                print("ONLY ONE")
+                for index, genre in enumerate(self.genres):
+                    print(f'{index+1}. {genre}')
+                print(f'{index+2}. Enter myself')
+                print()
+                idx = int(input(f'1-{index + 2}: '))
+
+                if idx == len(self.genres)+2:
+                    self.genre = input('Input genre: ')
+                else:
+                    print()
+                    self.genre = self.genres[idx - 1].lower()
+            else:
+                print("MANY")
+                for index, genre in enumerate(self.reuse.genres):
+                    print(f'{index+1}. {genre}')
+                print(f'{index+2}. Enter myself')
+                print()
+                idx = int(input(f'1-{index + 2}: '))
+
+                if idx == len(self.reuse.genres)+2:
+                    self.genre = input('Input genre: ')
+                else:
+                    print()
+                    self.genre = self.reuse.genres[idx - 1][0]   
+            
+           
 
         
+        elif chatCase == "predict_subgenre":
+            if not len(self.reuse.retrieval.retrievedCases)==1:
+                print([case.playlist_subgenre for case in  self.reuse.retrieval.retrievedCases if case.playlist_genre == self.genre])
+            print(self.reuse.predictionGenres)
+            return input(f'Are you satisfied with the song\'s predicted sub-genre "{self.reuse.predictionSubGenre[0]}" (y/n)? ')
+        
+        elif chatCase =="choose_subgenre":
+            print('Which of the following genres do you think fits the song best?')
+            print(self.reuse.subgenre)
+            for index, genre in enumerate(self.reuse.subgenre):
+                print(f'{index+1}. {genre.capitalize()}')
+            print(f'{index+2}. Enter myself')
+
+            print()
+            idx = int(input(f'1 - {index + 2}: '))
+            return idx
+
+        else:
+            print("Something went wrong")
