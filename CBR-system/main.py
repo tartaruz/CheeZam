@@ -24,6 +24,7 @@ class CBR:
 
     # Retrieval get an array with cases repesented as [case.track_id, similarity number(float 0.0 - 1.0)]
     def retrieve(self):
+        self.DB.close_connection()
         self.r1.queryCase = self.case
         self.r1.knn(1)
 
@@ -43,9 +44,11 @@ class CBR:
         print()
 
     def retain(self):
-        print(f'Info about "{self.case.track_name}\nGenre: {self.case.playlist_genre}\nSubgenre: {self.case.playlist_subgenre} \n')
-        self.r4.setCase(self.case)
+        # print(f'Info about "{self.case.track_name}\nGenre: {self.case.playlist_genre}\nSubgenre: {self.case.playlist_subgenre} \n')
+        self.r4.setCase(self.case)      
+        self.DB.open_connection()
         self.r4.retain()
+        self.DB.close_connection()
 
     def setQuery(self):
         self.query = input('Please input a song title to predict genre: ').lower()

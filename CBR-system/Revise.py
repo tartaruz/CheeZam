@@ -1,3 +1,4 @@
+import os
 class Revise:
 
     def __init__(self, DB):
@@ -50,10 +51,12 @@ class Revise:
 
 
     def consol_print(self, chatCase, prev_predict_correct=None):
+        os.system('clear')
         if chatCase == "first_predict":
             return input(f'Are you satisfied with the song\'s predicted genre "{self.reuse.predictionGenre[0]}" (y/n)? ')
 
         elif chatCase == "choose_genre":
+            os.system('clear')
             print('Which of the following genres do you think fits the song best?')
             if len(self.reuse.genres) == 1:
                 for index, genre in enumerate(self.genres):
@@ -101,6 +104,7 @@ class Revise:
                 return input(f'Are you satisfied with the song\'s predicted sub-genre "{self.reuse.predictionSubGenre}" (y/n)? ')
 
         elif chatCase == "choose_subgenre":
+            os.system('clear')  
             print('Which of the following genres do you think fits the song best?')
             for index, genre in enumerate(self.subgenres):
                 print(f'{index+1}. {genre.capitalize()}')
@@ -108,6 +112,7 @@ class Revise:
 
             print()
             idx = int(input(f'1 - {index + 2}: '))
+            os.system('clear')
             return idx
 
         else:
