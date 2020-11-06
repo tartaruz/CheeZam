@@ -13,7 +13,6 @@ class Spotify:
         }, data={
             'grant_type': 'client_credentials',
         })
-        print(resp.json())
         return resp.json()['access_token'], resp.json()['token_type']
 
     def search(self, query, artist, qtype):
@@ -30,7 +29,6 @@ class Spotify:
 
         res = requests.get(url, params=params, headers=headers).json()
 
-        print(res)
         if 'tracks' not in res.keys():
             return None, False
         

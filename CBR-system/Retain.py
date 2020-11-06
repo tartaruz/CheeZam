@@ -18,10 +18,10 @@ class Retain:
             query = self.sqlQuery()
             self.DB.cursor.execute(query)
             self.DB.db_connection.commit()
-            print("Case inserted to DB")
+            print("[Case inserted to DB]")
             print(self.case)
         else:
-            print("Case NOT inserted to DB")
+            print("[Case NOT inserted to DB]")
             print(self.case)
     
     # LOOK WHAT SANDER MADE ME DOOOO
