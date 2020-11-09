@@ -27,6 +27,10 @@ for track_id in df['track.id']:
 
 df.drop(indexes_to_delete, inplace=True)
 
+df_cases = df[0:len(df)//2]
+df_test = df[len(df)//2:]
+
 conn = engine.connect()
 
-df.to_sql('cases', conn, if_exists = 'replace')
+df_cases.to_sql('cases', conn, if_exists = 'replace')
+df_test.to_sql('test_cases', conn, if_exists = 'replace')
