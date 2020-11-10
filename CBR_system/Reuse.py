@@ -1,5 +1,5 @@
 class Reuse:
-    def __init__(self, cases,epsilon=0):
+    def __init__(self, cases,epsilon=5):
         self.queryCase = None
         self.retrieval = None
         self.predictionCase = None

@@ -1,8 +1,12 @@
+import sys
+import random
+
 from server.DB import DbConnector
 from model.case import case
 
 from help_modules.Spotify import Spotify
 from help_modules.functions import caseFromQuery
+from help_modules.tester import Tester
 
 from Retrieval import Retrieval
 from Reuse import Reuse
@@ -10,9 +14,8 @@ from Revise import Revise
 from Retain import Retain
 
 from user import User
-
 class CBR:
-    def __init__(self):
+    def __init__(self, testing=False):
         self.DB = DbConnector()
         self.user = User()
         self.r1 = Retrieval(self.DB)
@@ -24,6 +27,9 @@ class CBR:
         self.artist = None
         self.case = None
         self.artist_genres = []
+        
+        self.testing = testing
+        self.testCases = None
 
     # Retrieval get an array with cases repesented as [case.track_id, similarity number(float 0.0 - 1.0)]
     def retrieve(self):
@@ -53,11 +59,21 @@ class CBR:
         self.r4.retain()
         self.DB.close_connection()
 
-    def setQuery(self):
-        self.query, self.artist = self.user.search()
-        print()
+    def setQuery(self, tester=None):
+        if self.testing:
+            self.user = tester
+            self.r3.user = self.user
+            self.query, self.artist = self.user.search()
+            self.case = tester.case
+        else:
+            self.user = User()
+            self.r3.user = self.user
+            self.query, self.artist = self.user.search()
+            self.case = case(caseFromQuery(self))
         self.DB.open_connection()
-        self.case = case(caseFromQuery(self))
+
+
+
 
 
 
@@ -75,7 +91,8 @@ def main():
     cbr.revision()
 
     #saves if dont exist
-    cbr.retain()
+    if not cbr.testing:
+        cbr.retain()
 
 
 if __name__ == '__main__':

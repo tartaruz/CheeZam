@@ -13,7 +13,7 @@ class User:
         self.artist = input('Please enter artist of the song: ').lower()
         return self.query, self.artist
 
-    def consol_print(self, chatCase, prev_predict_correct=None):
+    def consol_print(self, chatCase, prev_predict_correct=None, subgenres=None):
         # os.system('clear')
         if chatCase == "first_predict":
             self.first_predict = input(f'The CBR-system prediciton: [{self.revision.reuse.predictionGenre[0]}]\nAre you satisfied with the song\'s predicted genre "{self.revision.reuse.predictionGenre[0]}" (y/n)? ')
@@ -80,7 +80,10 @@ class User:
             print()
             idx = int(input(f'1 - {index + 2}: '))
             # os.system('clear')
-            return idx
+            if idx == len(subgenres) + 1:
+                return input(f'Enter subgenre: ')
+            else:
+                return subgenres[idx -1]
 
         else:
             print("Something went wrong")

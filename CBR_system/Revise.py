@@ -37,11 +37,9 @@ class Revise:
         if satisfied.lower() == 'y':
             self.subgenre = self.reuse.predictionSubGenre
         else:
-            ans = self.user.consol_print("choose_subgenre")
-            if ans == len(self.subgenres) + 1:
-                self.subgenre = input(f'Enter subgenre: ')
-            else:
-                self.subgenre = self.subgenres[ans -1]
+            print(self.subgenres)
+            ans = self.user.consol_print("choose_subgenre", subgenres=self.subgenres)
+            self.subgenre = ans
 
         print()
         print('Thank you for your answers!')

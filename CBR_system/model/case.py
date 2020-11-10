@@ -1,3 +1,4 @@
+import time
 class case:
     def __init__(self, fetchData):
         self.sqlData = fetchData
@@ -28,6 +29,11 @@ class case:
 
     # Returnerer verdier for sammelingning
     def returnNumericValue(self):
+        if len(self.track_album_release_date)>4: 
+            time_tuple = time.strptime(self.track_album_release_date[:7], '%Y-%m')
+        else:
+            time_tuple = time.strptime(self.track_album_release_date, '%Y')
+        times = int(time.mktime(time_tuple))
         return list(map(lambda x: round(x, 4), [
                 self.danceability,
                 self.energy,
@@ -39,8 +45,9 @@ class case:
                 self.instrumentalness,
                 self.liveness,
                 self.valence,
-                self.tempo,
-                self.duration_ms
+                self.tempo
+                # self.duration_ms,
+                # times
                 ]))
 
     def toDict(self):
@@ -74,10 +81,23 @@ class case:
         self.playlist_genre = genre
         self.playlist_subgenre = subgenre
 
-
     def __str__(self):
-        string = "Genre: \t"+  str(self.playlist_genre).title() +" ( "+ str(self.playlist_subgenre).title()+" ) \n"
-        string += "Name: \t"+str(self.track_name)+" "+str(self.track_artist)+"\n"
-        string += "Artist\t: \t"+ str(self)+"\n"
-        string += "ID: \t"+ str(self.track_id)+"\n"
+        string =""
+        if self.playlist_genre!= None and self.playlist_subgenre!= None:
+            string += "Genre: \t"+  str(self.playlist_genre).title() +" ( "+ str(self.playlist_subgenre).title()+" ) \n"
+
+        if self.track_name!= None and self.track_artist!= None:
+            string += "Name: \t"+str(self.track_name)+" ["+str(self.track_artist)+"]\n"
+            
+        if len(string)<0:
+            string="No information"
+        # string += "Artist\t: \t"+ str(self)+"\n"
+        # string += "ID: \t"+ str(self.track_id)+"\n"
+        # string += self.track_album_release_date
+        # if len(self.track_album_release_date)>4: 
+        #     time_tuple = time.strptime(self.track_album_release_date, '%Y-%m-%d')
+        # else:
+        #     time_tuple = time.strptime(self.track_album_release_date, '%Y')
+        # print(time_tuple)
+        # string += str(time.mktime(time_tuple))
         return string
