@@ -43,7 +43,6 @@ class Spotify:
         artists = list(set(artists))
 
         corrected_artist = ''.join(get_close_matches(artist, artists, n=1)).lower()
-
         if len(corrected_artist) == 0:
             corrected_artist = artists[0]
         

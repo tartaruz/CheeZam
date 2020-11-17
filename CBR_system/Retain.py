@@ -14,29 +14,35 @@ class Retain:
         return (len(fetchedCase)>0)
 
     def retain(self):
-        self.DB.open_connection()
-        if (self.case != None and not self.check_exist()):
-            query = self.sqlQuery()
-            print("[Case inserted to DB]")
+        try:
+            self.DB.open_connection()
+            if (self.case != None and not self.check_exist()):
+                query = self.sqlQuery()
+                print("[Case inserted to DB]")
 
-        else:
-            print("[Case updated inserted to DB]")
-            query = f"""
-            UPDATE cases 
-            SET
-                `playlist_genre` = "{self.case.playlist_genre}",
-                `playlist_subgenre` = "{self.case.playlist_subgenre.lower()}"
-            WHERE
-                `track.id` = "{self.case.track_id}"
-            """        
-        self.DB.cursor.execute(query)
-        self.DB.db_connection.commit()
-        print(self.case)
-        self.DB.close_connection()
+            else:
+                print("[Case updated inserted to DB]")
+                query = f"""
+                UPDATE cases 
+                SET
+                    `playlist_genre` = "{self.case.playlist_genre}",
+                    `playlist_subgenre` = "{self.case.playlist_subgenre.lower()}"
+                WHERE
+                    `track.id` = "{self.case.track_id}"
+                """        
+            self.DB.cursor.execute(query)
+            self.DB.db_connection.commit()
+            print(self.case)
+            self.DB.close_connection()
 
+        except TypeError as e:
+            print(e)
+            pass
+        
     # LOOK WHAT SANDER MADE ME DOOOO
     def sqlQuery(self):
         caseDict = self.case2query()
+        print(caseDict)
         col = ", ".join(["`"+str(col)+"`" for col in caseDict.keys()])
         values = ", ".join(["\""+str(value)+"\"" for value in caseDict.values()])
         q = "INSERT INTO cases ("+col+")"
@@ -45,13 +51,14 @@ class Retain:
         
     def case2query(self):
         case = self.case
+        
         return {
             'track.id': case.track_id,
-            'track.name': case.track_name,
-            'track.artist': case.track_artist,
+            'track.name': case.track_name.replace('"',"''"),
+            'track.artist': case.track_artist.replace('"',"''"),
             'track.popularity': case.track_popularity,
             'track.album.id': case.track_album_id,
-            'track.album.name':case.track_album_name,
+            'track.album.name':case.track_album_name.replace('"',"''"),
             'track.album.release_date': case.track_album_release_date,
             'playlist_name': case.playlist_name,
             'playlist_id': case.playlist_id,

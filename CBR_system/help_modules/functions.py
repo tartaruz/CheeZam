@@ -1,10 +1,10 @@
 def caseFromQuery(cbr):
     track_id, track = cbr.spotify.search(cbr.query, cbr.artist, 'track')
 
-    # while not track and cbr.user.testing:
-    #     print(f"Could not find any results for {cbr.query}. Try again")
-    #     cbr.setQuery()
-    #     track_id, track = cbr.spotify.search(cbr.query, cbr.artist, 'track')
+    while not track:
+        print(f"Could not find any results for {cbr.query}. Try again")
+        cbr.setQuery()
+        track_id, track = cbr.spotify.search(cbr.query, cbr.artist, 'track')
 
     try:
         cbr.artist_genres = cbr.spotify.getArtistGenres(track['album']['artists'][0]['id'])
