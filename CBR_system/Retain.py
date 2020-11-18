@@ -10,7 +10,6 @@ class Retain:
     def check_exist(self):
         self.DB.cursor.execute("SELECT `track.id` FROM cases WHERE `track.id` = \""+self.case.track_id+"\";")
         fetchedCase = self.DB.cursor.fetchall()
-        print(fetchedCase)
         return (len(fetchedCase)>0)
 
     def retain(self):
@@ -32,9 +31,8 @@ class Retain:
                 """        
             self.DB.cursor.execute(query)
             self.DB.db_connection.commit()
-            print(self.case)
             self.DB.close_connection()
-
+            print(self.case)
         except TypeError as e:
             print(e)
             pass
@@ -42,7 +40,6 @@ class Retain:
     # LOOK WHAT SANDER MADE ME DOOOO
     def sqlQuery(self):
         caseDict = self.case2query()
-        print(caseDict)
         col = ", ".join(["`"+str(col)+"`" for col in caseDict.keys()])
         values = ", ".join(["\""+str(value)+"\"" for value in caseDict.values()])
         q = "INSERT INTO cases ("+col+")"

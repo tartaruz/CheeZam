@@ -20,11 +20,9 @@ class Test_CBR:
         self.n = n
         cbr = CBR(testing=True)
         # for vote in range(55,65):
-        print(len(self.test_cases))
         # print((cbr.r1.cases))
         track_ids = [case.track_id for case in cbr.r1.cases]
         self.test_cases = [case for case in self.test_cases if case.track_id not in track_ids]
-        print(len(self.test_cases))
         for i in range(1,n+1):
             try:
                 case = self.test_cases.pop(random.randint(0,len(self.test_cases)-1))
