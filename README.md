@@ -1,8 +1,9 @@
 #  CheeZam
-A Case-based reasoning system created by the NTNU students: Marius Shberg, Sander Lindberg and Thomas Ramirez Fernandez.
+A Case-based reasoning system created by the NTNU students: Marius Sjøberg, Sander Lindberg and Thomas Ramirez Fernandez.
 For the subject TDT4173 - Machine Learning
 
-> *The purpose of Schitzam is to explore the possibility to predict song genres using case based reasoning(CBR). CBR is a subset of machine learning that closely relates to how people reason when encountering a problem. The core idea is to solve new problems based on previous solutions. This paper contextualizes CBR and shows how it can be used to classify song genres based on a set of attributes, such as the song's energy and tempo. It explains how the CBR classification is achieved trough looking at each process of the CBR method and shows its code-implementation. A dataset containing circa 32000 songs/cases and their attributes were used.*
+From our project paper:
+> *The purpose of the paper is to explore the possibility to predict song genres using case based reasoning(CBR). CBR is a subset of machine learning that closely relates to how people reason when encountering a problem. The core idea is to solve new problems based on previous solutions. This paper contextualizes CBR and shows how it can be used to classify song genres based on a set of attributes, such as the song's energy and tempo. It explains how the CBR classification is achieved trough looking at each process of the CBR method and shows its code-implementation. A dataset containing circa 32000 songs/cases and their attributes were used.*
 ## Installation
 Python3.8+ is needed
 
@@ -45,4 +46,4 @@ Are you satisfied with the song's predicted genre "pop" (y/n)?
 
 
 ---
-Marius Shberg, Sander Lindberg and Thomas Ramirez Fernandez.
+Marius Sjøberg, Sander Lindberg and Thomas Ramirez Fernandez.
