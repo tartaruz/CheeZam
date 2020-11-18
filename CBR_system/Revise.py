@@ -9,12 +9,14 @@ class Revise:
         self.subgenre = None
         self.user = user
         self.DB = DB
+        self.DB.open_connection()
         self.DB.cursor.execute('SELECT DISTINCT playlist_genre FROM cases;')
         self.genres = [genre[0].capitalize()
-                       for genre in self.DB.cursor.fetchall()]
+                       for genre in self.DB.cursor.fetchall() if not genre[0] == None]
         self.DB.cursor.execute('SELECT DISTINCT playlist_subgenre FROM cases;')
         self.subgenres = [subgenre[0].capitalize()
-                          for subgenre in self.DB.cursor.fetchall()]
+                          for subgenre in self.DB.cursor.fetchall() if not subgenre[0] == None]
+        self.DB.close_connection()
 
     def revise(self):
         self.user.revision = self

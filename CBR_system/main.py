@@ -18,6 +18,7 @@ class CBR:
     def __init__(self, testing=False):
         self.DB = DbConnector()
         self.user = User()
+        self.DB.open_connection()
         self.r1 = Retrieval(self.DB)
         self.r2 = Reuse(self.r1.cases)
         self.r3 = Revise(self.DB, self.user)
