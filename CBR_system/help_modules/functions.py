@@ -1,6 +1,12 @@
 def caseFromQuery(cbr):
+    """
+    Retrieves and converts from Spotify into a case, without genres and playlist_id and playlist_name.
+    """
+    
+    # Retrieve track_id and track from spotify api
     track_id, track = cbr.spotify.search(cbr.query, cbr.artist, 'track')
 
+    # If the system could not find the song, ask the user to input song and artist again 
     while not track:
         print(f"Could not find any results for {cbr.query}. Try again")
         cbr.setQuery()
@@ -38,7 +44,7 @@ def caseFromQuery(cbr):
         'tempo': audio_features['tempo'],
         'duration_ms': audio_features['duration_ms']
     }
-    # print(track_features["track_id"],track_features["track_name"], " by ", track_features["track_artist"])
+    
     new_case = list(map(lambda x: x[1], track_features.items()))
    
     return new_case

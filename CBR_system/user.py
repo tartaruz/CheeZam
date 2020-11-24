@@ -1,6 +1,29 @@
 import os
 
 class User:
+    """
+    A class to handle user input and output.
+    ...
+
+    Attributes
+    ----------
+    query : String
+        Inputed song name
+    atrist : String
+        Inputed artist name
+    revision : Revise
+        Revise object
+    first_predict : String
+        The user's answer to whether they are satisfied with the first prediction
+
+    Methods
+    -------
+    search():
+        Collects search input from the user
+    consol_print(chatCase, prev_predict_correct=None, subgenres=None):
+        Collects answers from the user to whether they are satisfied with the prediction or not.
+        Also collects the user's corrected genre prediction if the system's prediction was incorrect.
+    """
     def __init__(self):
         self.query = None
         self.artist = None
@@ -8,13 +31,18 @@ class User:
         self.first_predict = None
 
     def search(self):
+        """Collects search input from the user"""
         self.query = input(
             'Please input a song title to predict genre: ').lower()
         self.artist = input('Please enter artist of the song: ').lower()
         return self.query, self.artist
 
     def consol_print(self, chatCase, prev_predict_correct=None, subgenres=None):
-        # os.system('clear')
+        """
+        Collects answers from the user to whether they are satisfied with the prediction or not.
+        Also collects the user's corrected genre prediction if the system's prediction was incorrect.
+        """
+
         if chatCase == "first_predict":
             self.first_predict = input(f'The CBR-system prediciton: [{self.revision.reuse.predictionGenre[0]}]\nAre you satisfied with the song\'s predicted genre "{self.revision.reuse.predictionGenre[0]}" (y/n)? ')
             return self.first_predict
@@ -34,9 +62,6 @@ class User:
                     print()
                     self.revision.genre = self.revision.genres[idx - 1].lower()
             else:
-                # genre_options = [case[0].capitalize() for case in self.revision.reuse.genres if case[0].capitalize()!="Latin"]
-                # [genre_options.append(case) for case in self.revision.genres if case not in self.revision.genres]
-                # print(genre_options)
                 for index, genre in enumerate(self.revision.reuse.genres):
                     print(f'{index+1}. {genre[0].title()}')
                 print(f'{index+2}. Enter myself')
