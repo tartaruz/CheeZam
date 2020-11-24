@@ -64,7 +64,7 @@ Similar to the first prediction, the system will present its prediction and now 
 ```bash
 Are you satisfied with the song's predicted sub-genre "neo soul" (y/n)?
 ```
-If the case is that it is wrong, a list with all sub-genres in the system will be presented in a list and additionally the possibility to insert a new sub-genre.
+If the case that the predicition is wrong, all sub-genres in the system will be presented in a list and additionally the possibility to insert a new sub-genre.
 ```bash
 Which of the following genres do you think fits the song best?
 1. Post-teen pop
